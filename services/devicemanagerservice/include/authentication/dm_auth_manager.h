@@ -129,6 +129,7 @@ public:
                                const std::string &extra);
     int32_t UnAuthenticateDevice(const std::string &pkgName, const std::string &deviceId);
     int32_t VerifyAuthentication(const std::string &authParam);
+    void VerifyPinAuthAuthentication(const std::string &action);
     void OnSessionOpened(int32_t sessionId, int32_t sessionSide, int32_t result);
     void OnSessionClosed(int32_t sessionId);
     void OnDataReceived(int32_t sessionId, std::string message);
