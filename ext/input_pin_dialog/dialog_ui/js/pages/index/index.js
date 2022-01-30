@@ -17,7 +17,6 @@ export default {
         var input=  this.$element('input').value;
         console.info('click confirm end');
         console.info('input: ' + input);
-        console.info('pincode: ' + pincode);
         callNativeHandler(input, "0");
     },
     onCancel() {
