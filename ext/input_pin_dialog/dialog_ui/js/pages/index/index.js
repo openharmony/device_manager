@@ -18,12 +18,7 @@ export default {
         console.info('click confirm end');
         console.info('input: ' + input);
         console.info('pincode: ' + pincode);
-        if (input == pincode){
-            console.info('pincode: = input');
-            callNativeHandler(input, "0");
-        } else {
-            console.info('pincode: != input');
-        }
+        callNativeHandler(input, "0");
     },
     onCancel() {
         console.info('click cancel');
