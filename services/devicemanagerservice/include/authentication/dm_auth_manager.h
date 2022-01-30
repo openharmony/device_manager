@@ -86,6 +86,7 @@ typedef struct DmAuthRequestContext {
     std::string appThumbnail;
     std::string token;
     int32_t reason;
+    int32_t aceId;
     std::vector<std::string> syncGroupList;
 } DmAuthRequestContext;
 
@@ -112,6 +113,7 @@ typedef struct DmAuthResponseContext {
     int64_t requestId;
     int32_t code;
     int32_t state;
+    int32_t aceId;
     std::vector<std::string> syncGroupList;
 } DmAuthResponseContext;
 
@@ -162,6 +164,7 @@ public:
     int32_t GetAuthenticationParam(DmAuthParam &authParam);
     int32_t OnUserOperation(int32_t action);
     void UserSwitchEventCallback(void);
+    void ClosePage(const int32_t &id);
 
 private:
     std::shared_ptr<SoftbusConnector> softbusConnector_;

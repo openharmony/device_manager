@@ -175,9 +175,9 @@ const std::string ETH_PORT = "ETH_PORT";
 
 // ACE
 const int32_t ACE_X = 50;
-const int32_t ACE_Y = 200;
-const int32_t ACE_WIDTH = 400;
-const int32_t ACE_HEIGHT = 200;
+const int32_t ACE_Y = 300;
+const int32_t ACE_WIDTH = 600;
+const int32_t ACE_HEIGHT = 400;
 } // namespace DistributedHardware
 } // namespace OHOS
 #endif

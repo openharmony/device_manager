@@ -520,7 +520,7 @@ int32_t DmAuthManager::AddMember(const std::string &deviceId)
         return DM_FAILED;
     }
     LOGI("DmAuthManager::authRequestContext CancelDisplay start");
-    CancelDisplay();
+    Ace::UIServiceMgrClient::GetInstance()->CancelDialog(authResponseContext_->aceId);
     return DM_OK;
 }
 
@@ -547,7 +547,7 @@ void DmAuthManager::AuthenticateFinish()
     LOGI("DmAuthManager::AuthenticateFinish start");
     if (authResponseState_ != nullptr) {
         if (authResponseState_->GetStateType() == AuthState::AUTH_RESPONSE_FINISH) {
-            CancelDisplay();
+            Ace::UIServiceMgrClient::GetInstance()->CancelDialog(authResponseContext_->aceId);
         }
         if (!timerMap_.empty()) {
             for (auto &iter : timerMap_) {
@@ -688,7 +688,7 @@ void DmAuthManager::ShowAuthInfoDialog()
     }
     ptr = authenticationMap_[1];
     LOGI("ShowAuthInfoDialog code:%d", authResponseContext_->code);
-    ptr->ShowAuthInfo(authResponseContext_->code);
+    ptr->ShowAuthInfo(authResponseContext_->code, shared_from_this());
 }
 
 void DmAuthManager::ShowStartAuthDialog()
@@ -709,7 +709,7 @@ int32_t DmAuthManager::GetAuthenticationParam(DmAuthParam &authParam)
         LOGI("dmAbilityMgr_ is nullptr");
         return DM_POINT_NULL;
     }
-    
+
     dmAbilityMgr_->StartAbilityDone();
     AbilityRole role = dmAbilityMgr_->GetAbilityRole();
     authParam.direction = (int32_t)role;
@@ -784,6 +784,11 @@ void DmAuthManager::VerifyPinAuthAuthentication(const std::string &action)
         authRequestState_->TransitionTo(std::make_shared<AuthRequestFinishState>());
     }
     LOGI("DmAuthManager::VerifyAuthentication complete");
+}
+
+void DmAuthManager::ClosePage(const int32_t &id)
+{
+    authResponseContext_->aceId = id;
 }
 } // namespace DistributedHardware
 } // namespace OHOS

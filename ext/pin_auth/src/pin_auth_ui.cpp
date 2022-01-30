@@ -28,7 +28,7 @@ PinAuthUi::PinAuthUi()
     LOGI("AuthUi constructor");
 }
 
-int32_t PinAuthUi::ShowPinDialog(int32_t code)
+int32_t PinAuthUi::ShowPinDialog(int32_t code, std::shared_ptr<DmAuthManager> authManager)
 {
     LOGI("ShowPinDialog start");
     nlohmann::json jsonObj;
@@ -41,9 +41,14 @@ int32_t PinAuthUi::ShowPinDialog(int32_t code)
         params,
         OHOS::Rosen::WindowType::WINDOW_TYPE_SYSTEM_ALARM_WINDOW,
         ACE_X, ACE_Y, ACE_WIDTH, ACE_HEIGHT,
-        [](int32_t id, const std::string& event, const std::string& params) {
-            LOGI("CancelDialog start id:%d,event:%s,parms:%s", id, event.c_str(), params.c_str());
-            Ace::UIServiceMgrClient::GetInstance()->CancelDialog(id);
+        [authManager](int32_t id, const std::string& event, const std::string& params) {
+            if (strcmp(params.c_str(), "0") == 0) {
+                authManager->ClosePage(id);
+            }
+            if (strcmp(params.c_str(), "1") == 0) {
+                LOGI("CancelDialog start id:%d,event:%s,parms:%s", id, event.c_str(), params.c_str());
+                Ace::UIServiceMgrClient::GetInstance()->CancelDialog(id);
+            }
         });
     LOGI("ShowConfigDialog end");
     return DM_OK;
