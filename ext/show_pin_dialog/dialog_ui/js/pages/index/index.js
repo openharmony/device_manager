@@ -6,6 +6,7 @@ export default {
     },
     onInit() {
         console.info('getParams: ' + router.getParams());
+        callNativeHandler("EVENT_CONFIRM", "0");
     },
     onConfirm() {
         console.info('click confirm');

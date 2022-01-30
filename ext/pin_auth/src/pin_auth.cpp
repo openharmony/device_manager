@@ -33,9 +33,9 @@ PinAuth::~PinAuth()
 {
 }
 
-int32_t PinAuth::ShowAuthInfo(int32_t code)
+int32_t PinAuth::ShowAuthInfo(int32_t code, std::shared_ptr<DmAuthManager> authManager)
 {
-    return pinAuthUi_->ShowPinDialog(code);
+    return pinAuthUi_->ShowPinDialog(code, authManager);
 }
 
 int32_t PinAuth::StartAuth(int32_t code, std::shared_ptr<DmAuthManager> authManager)

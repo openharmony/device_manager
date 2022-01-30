@@ -8,14 +8,11 @@
 
     <input class="title-pin" id="input" type="number" value=""></input>
 
-    <text class="title-error" id="error" hidden="true">
-        PIN码输入错误，请重新输入
-    </text>
     <div class="but">
-        <button class="but1" onclick="onCancel" type="text">
+        <button class="but1" onclick="onCancel">
             取消
         </button>
-        <button class="but2" onclick="onConfirm" type="capsule">
+        <button class="but2" onclick="onConfirm">
             确定
         </button>
     </div>
