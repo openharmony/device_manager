@@ -25,7 +25,7 @@ const std::string DISCOVERY_TIMEOUT_TASK = "discoveryTimeout";
 const int32_t DISCOVERY_TIMEOUT = 120;
 const int32_t SESSION_CANCEL_TIMEOUT = 0;
 
-static void TimeOut(void *data)
+static void TimeOut(void *data, DmTimer& timer)
 {
     LOGE("time out ");
     DmDiscoveryManager *discoveryMgr = (DmDiscoveryManager *)data;
@@ -73,14 +73,14 @@ int32_t DmDiscoveryManager::StartDeviceDiscovery(const std::string &pkgName, con
 
 int32_t DmDiscoveryManager::StopDeviceDiscovery(const std::string &pkgName, uint16_t subscribeId)
 {
-    if (!discoveryQueue_.empty()) {
-        discoveryQueue_.pop();
+    if (discoveryQueue_.empty()) {
+        LOGE("discovery is not start");
+        return DM_FAILED;
     }
-    if (!discoveryContextMap_.empty()) {
-        discoveryContextMap_.erase(pkgName);
-        softbusConnector_->UnRegisterSoftbusDiscoveryCallback(pkgName);
-        discoveryTimer_->Stop(SESSION_CANCEL_TIMEOUT);
-    }
+    discoveryQueue_.pop();
+    discoveryContextMap_.erase(pkgName);
+    softbusConnector_->UnRegisterSoftbusDiscoveryCallback(pkgName);
+    discoveryTimer_->Stop(SESSION_CANCEL_TIMEOUT);
     return softbusConnector_->StopDiscovery(subscribeId);
 }
 
